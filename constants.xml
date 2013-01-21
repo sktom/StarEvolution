@@ -1,0 +1,47 @@
+
+<constant>
+  <experimental>
+    dMr = 1.0 * 10**30 #gm
+    M = 1.99 * 10**33 #gm
+    dt = 10**17 #s
+    term = 10**19 #s
+  </experiental>
+
+  <state>
+    <initial>
+      <component>
+        X = 0.73 #nil
+        Y = 0.25 #nil
+        Z = 0.02 #nil
+      </component>
+    </initial>
+    <boundary>
+      <central>
+        r = 0.0 #cm
+        P = 2.7 * 10**17 #dyn/cm2
+        rho = 1.56 * 10**2 #gm/cm3
+        T = 1.4 * 10**7 #K
+        Lr = 0.0 #erg/s
+      </centeral>
+      <surface>
+        r = 7.0 * 10**10 #cm
+        P = 0.0 #dyn/cm2
+        rho = 0.0 #gm/cm3
+        T = 5770.0 #K
+      </sarface>
+    </boundary>
+  </state>
+
+  <natural>
+    PI = Math::PI #nil
+    H = 3.63 * 10**-27 #cm2gm/s
+    C = 3.00 * 10**10 #cm/s
+    Me = 9.11 * 10**-28 #gm
+    Mp = 1.67 * 10**-24 #gm
+    Kb = 1.38 * 10**-16 #cm2gm/s2K
+    G = 6.67 * 10**-8 #cm3/s2gm
+    Gamma = 5.0 / 3 #nil
+    Sigma = 5.6704 * 10 ** -5 #gm/s3K4
+  </natural>
+</constant>
+
