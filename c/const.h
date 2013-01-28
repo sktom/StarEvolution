@@ -12,5 +12,5 @@
 #define sigma 5.6704 * 10 ** -5 /*gm/s3K4*/
 /*fix here*/
 #define Ne 1
-#define Pf pow(3 / (8 * PI), 1.0 / 3) * h * c * pow(Ne, 1.0 / 3)
+#define Pf 5.36 * pow(10, -17) * pow(Ne, 1.0 / 3) /*pow(3 / (8 * PI), 1.0 / 3) * h * c * pow(Ne, 1.0 / 3)*/
 

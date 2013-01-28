@@ -12,7 +12,7 @@ module Evolution
     def dtempdMr(m_r, temp, rad, comp)
       -(1 - @gamma**-1) * @G * m_r * @temperature / (4 * @pi * @radius**4 * @pressure)
     end
-    def dLdMr(temp, rho, comp)
+    def dLrdMr(temp, rho, comp)
       t9 = @temperature / 10**9
       e_pp = 2.4 * 10**4 * @density * @hydrogen**2 / t9**(2.0 / 3) * Math::exp(-3.380 / t9**(3**-1))
       e_cno = 4.4 * 10**25 * @density * @hydrogen * @metal / t9**(2.0 / 3) * Math::exp(-15.228 / t9**(3**-1))
