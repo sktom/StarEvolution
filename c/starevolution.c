@@ -1,65 +1,43 @@
-#include "./evolute.h"
+
+#include "./evolution.h"
 #include "./state.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 extern State current_state;
+/*State * cs = &current_state;*/
+extern State * cs;
 extern void init_state(State *);
 extern void create_initail_model(State *);
-extern void time_evolute(State *);
-extern void spatial_evolute(State *);
-State * cs = &current_state;
-
-void
-simple_spacial_evolution(double Mr, double dMr)
-{
-  cs->P += dPdMr(Mr, cs->r) * dMr;
-  cs->rho += drhodMr(cs->rho, cs->T, cs->r, cs->comp) * dMr;
-  cs->T += dTdMr(Mr, cs->P, cs->T, cs->r, cs->comp) * dMr;
-  cs->r += drdMr(cs->rho, cs->r) * dMr;
-  cs->Lr += dLrdMr(cs->rho, cs->T, cs->comp) * dMr;
-}
-
-void
-spacial_evolution(double Mr, double dMr)
-{
-  cs->P = P(Mr, cs->r);
-  cs->rho += drhodMr(cs->rho, cs->T, cs->r, cs->comp) * dMr;
-  cs->T += dTdMr(Mr, cs->P, cs->T, cs->r, cs->comp) * dMr;
-  cs->r += drdMr(cs->rho, cs->r) * dMr;
-  cs->Lr += dLrdMr(cs->rho, cs->T, cs->comp) * dMr;
-}
-
-void
-time_evolution(double t, double dt)
-{
-  cs->P += dPdt(t, cs->r) * dt;
-  cs->rho += drhodt(cs->T, cs->rho, cs->comp) * dt;
-  cs->T += dTdt(t, cs->r) * dt;
-  cs->r += drdt(cs->rho, cs->r) * dt;
-  cs->Lr += dLrdt(cs->rho, cs->T, cs->comp) * dt;
-  cs->comp.X += dXdt() * dt;
-  cs->comp.Y += dYdt() * dt;
-  cs->comp.Z += dZdt() * dt;
-}
+extern void time_evolution(double);
+extern void simple_spatial_evolution(State *, double);
+extern void spatial_evolution(State *);
 
 int
 main(int argc, char *argv[])
 {
-  State current_state;
-  State * last_state_map;
-  init_state(&current_state);
-  create_initial_model(&last_state_map);
+  init_state(cs);
+  State * last_state_map = (State *)malloc(sizeof(State) * (M / dMr));
+  State * log = (State *)malloc(sizeof(State) * (term / dt) * sizeof(State) * (M / dMr));
+  create_initial_model(last_state_map);
 
-  int t, dt;
-  for(t = 0, dt = pow(10, 17); t < pow(10, 19), t += pow(10, 17))
+  State * itor = last_state_map;
+  int t;
+  for(t = t0; t < term; t += dt)
   {
-    time_evolute(&current_state);
-    State * itor = last_state_map;
+    time_evolution(t);
     while(++itor)
     {
-      spatial_evolute(&current_state, itor);
-      &itor = *current_state;
+      spatial_evolution(itor);
     }
+    fit_boundary_state(cs);
+    while(--itor)
+    {
+      spatial_evolution(itor);
+      *itor = *cs;
+    }
+    log = itor;
+    log += (unsigned long)(sizeof(State) * (M / dMr));
   }
 
   return 0;

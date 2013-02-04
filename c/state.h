@@ -6,8 +6,9 @@ typedef struct
   double Z;
 } Composition;
 
-typedef union ST
+typedef struct
 {
+  double Mr;
   double rho;
   double P;
   double T;
