@@ -41,7 +41,9 @@
 #define dTdt(t, r) 0
 #define drdt(rho, r) 0
 #define dLrdt(rho, T, comp) 0
-#define dXdt(dLr) 0
-#define dYdt(dLr) 0
-#define dZdt(dLr) 0
+#define dXdt \
+  (epp / pow(c, 2) / dMr)
+#define dYdt \
+  (- dXdt)
+#define dZdt 0
 
